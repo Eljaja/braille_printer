@@ -3,13 +3,11 @@
 
 import pygame
 from pygame import *
+from brailleTranslator import BrailleTranslator
 
 ###
 ### in future - create a gui class(Егор, напиши мне)
 ###
-"""
-Бля, почему крестик не работает
-"""
 WIDHT = 640
 HEIGHT = 480
 RESOLUTION = (WIDHT,HEIGHT) # задание разрешения
@@ -21,6 +19,11 @@ def gui():
     display.set_caption('Printer') # подпись окна
     background = Surface(RESOLUTION) # создание поверхности (в данном случае бэкграунда)
     background.fill(BACKGROUND_COLOR) # заливка задника
+    
+    testtext = 'abcd'
+    testsheet = BrailleTranslator(testtext).en_translation() # перевод текста в шрифт Брайля
+    for string in testsheet:    # построчный вывод текста
+        print(string)
     
     while True:
     
