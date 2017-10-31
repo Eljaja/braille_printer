@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 #coding: utf-8
 
+import pygame
 from pygame import *
 
 ###
@@ -23,9 +24,10 @@ def gui():
     
     while True:
     
-        for event in event.get():
+        for event in pygame.event.get():
             if event.type == QUIT:
                 raise SystemExit # закрытие программы при нажатии на крестик в главном окне
+                
         mainscreen.blit(background,(0,0)) # отрисовка в окне заднего фона, начиная с координаты (0,0)
         display.flip() # обновление изображения каждую итерацию цикла
 gui()
