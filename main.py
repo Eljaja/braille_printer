@@ -4,10 +4,8 @@
 #####
 ####Загляните в техническое задание/руководство к работе
 #####
-from sys import path as PYTHONPATH
-
-PYTHONPATH.append("//home//ubuntu//workspace//project")
-
+#from sys import path as PYTHONPATH
+#PYTHONPATH.append("//home//ubuntu//workspace//project")
 
 from BrailleGui import BrailleGui
 #import BrailleTranslator
