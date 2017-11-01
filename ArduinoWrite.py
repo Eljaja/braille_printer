@@ -24,7 +24,7 @@ class AruinoWrite:
             self.answer = "COM3"
         elif platform == "win64":
             self.answer = "COM3"
-        return self.anser
+        return self.answer
         
         
     def writing(self,data): #передача информации на arduino по serial
@@ -34,6 +34,3 @@ class AruinoWrite:
         except Exception as error:
             self.err = str(error)
         return self.err
-
-
-a = AruinoWrite()

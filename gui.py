@@ -1,8 +1,11 @@
 #!/usr/bin/python3
 #coding: utf-8
 
+
 import pygame
-from pygame import *
+from pygame.locals import *
+#import pygame
+##from pygame import *
 from brailleTranslator import BrailleTranslator
 
 ###
@@ -14,7 +17,7 @@ RESOLUTION = (WIDHT,HEIGHT) # задание разрешения
 BACKGROUND_COLOR = Color('#FFFFFF') # задание цвета бэкграунда
 
 def gui():
-    init()
+    pygame.init()
     mainscreen = display.set_mode(RESOLUTION) # создание окна
     display.set_caption('Printer') # подпись окна
     background = Surface(RESOLUTION) # создание поверхности (в данном случае бэкграунда)
