@@ -16,13 +16,11 @@ class AruinoWrite:
         self.ser = serial.Serial(port)
     
     
-    def CheckOS(self):
+    def CheckOS(self):   # чек платформы с помощью модуля sys и переменной platform
         self.answer = ""
         if platform == "linux" or platform == "linux2":
             self.answer = "/dev/ttyUSB0"
-        elif platform == "win32":
-            self.answer = "COM3"
-        elif platform == "win64":
+        elif platform == "win32" or platform == "win64":
             self.answer = "COM3"
         return self.answer
         
@@ -31,6 +29,7 @@ class AruinoWrite:
         self.err = "Ok"
         try:
             self.ser.write(data)
+            return self.err
         except Exception as error:
             self.err = str(error)
         return self.err

@@ -2,6 +2,7 @@
 #coding: utf-8
 
 from BrailleTranslator import BrailleTranslator
+
 import pygame as pg # Импортировал pygame сократил его до pg )))
 from pygame.locals import *
 

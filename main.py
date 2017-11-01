@@ -20,7 +20,6 @@ def main():          #Иницилизация функции main для раб
 '''
     try:
         pass
-         # тут выводится пока только в консоль? 
     except Exception as err:
         if err != None:
             print("###########################")
