@@ -4,23 +4,30 @@
 #####
 ####Загляните в техническое задание/руководство к работе
 #####
+from sys import path as PYTHONPATH
 
-from gui import *
-import brailleTranslator
+PYTHONPATH.append("//home//ubuntu//workspace//project")
+
+
+from BrailleGui import BrailleGui
+#import BrailleTranslator
 def main():          #Иницилизация функции main для работы главного файла
     print("Hello, buys")
     
     #a = brailleTranslator.en_translations("aaaaaaa")
     #print(a.en_translation)
-  
+    window = BrailleGui()
+    window.gui()
+    
+'''
     try:
         pass
-        gui() # тут выводится пока только в консоль? 
+         # тут выводится пока только в консоль? 
     except Exception as err:
         if err != None:
             print("###########################")
             print(err)
             print("###########################")
-
+'''
 if __name__ == "__main__":
     main()

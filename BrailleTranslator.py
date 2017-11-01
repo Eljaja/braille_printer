@@ -2,10 +2,12 @@
 #coding: utf-8
 
 class BrailleTranslator:
+    
     def __init__(self,text):
         self.text = text
         self.sheet = ['','','',''] # исходный лист
         self.string = 0 # номер строки
+        
         
     def en_translation(self):  
         for symbol in self.text:  #посимвольная обработка
