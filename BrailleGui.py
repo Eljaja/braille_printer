@@ -23,7 +23,7 @@ class BrailleGui:
         background = pg.Surface(self.RESOLUTION) # создание поверхности (в данном случае бэкграунда)
         background.fill(self.BACKGROUND_COLOR) # заливка задника
         
-        testtext = 'dabdabdabdab'
+        testtext = 'bc'
         testsheet = BrailleTranslator(testtext).en_translation() # перевод текста в шрифт Брайля
         x = 340
         y = 20

@@ -1,39 +1,60 @@
 #!/usr/bin/python3
 #coding: utf-8
 
-
-import pygame as pg # Импортировал pygame сократил его до pg )))
-from pygame.locals import *
-from brailleTranslator import BrailleTranslator
-
-
-class BraileGui:
-    def __init__(self,WIDHT=640,HEIGHT=480):
-        self.RESOLUTION = (WIDHT,HEIGHT)
-        self.BACKGROUND_COLOR = Color('#FFFFFF')
+class BrailleTranslatorEN:
+    def __init__(self):
+        import constant #Импорт алфавитов
+        self.alph = constant.alph
+        del constant
+        self.num = dict(zip([1, 2, 3, 4, 5, 6, 7, 8, 9, 0],
+                            ["a", "b", "c", "d", "e", "f", "g", "h", "i", "h"]))
 
 
-    def gui(self):
+    def Translation(self, en_str):
+        isnum =  lambda char: True if char in "1234567890" else False
         
-        pg.init()
-        mainscreen = pg.display.set_mode(RESOLUTION) # создание окна
-        pg.display.set_caption('Printer') # подпись окна
-        background = pg.Surface(RESOLUTION) # создание поверхности (в данном случае бэкграунда)
-        background.fill(BACKGROUND_COLOR) # заливка задника
+        strFlag = False
+        self.res = []
+        while en_str:
+            char = en_str[0]
+            if char.isupper():
+                if strFlag:
+                    self.res.append(self.alph["STR"])
+                    strFlag = False
+                self.res.append(self.alph["UP"])
+                try:
+                    self.res.append(self.alph[char.lower()])
+                except KeyError:
+                    pass
+                en_str = en_str.replace(char, "", 1)
+                
+            elif isnum(char):
+                self.res.append(self.alph["NUM"])
+                while isnum(char):
+                    self.res.append(self.alph[self.num[int(char)]])
+                    en_str = en_str.replace(char, "", 1)
+                    if en_str == "":
+                        break
+                    char = en_str[0]
+                strFlag = True
+                
+            else:
+                if strFlag:
+                    self.res.append(self.alph["STR"])
+                    strFlag = False
+                try:
+                    self.res.append(self.alph[char])
+                except KeyError:
+                    pass
+                en_str = en_str.replace(char, "", 1)
+                
+                
+        return self.res
         
         
-        testtext = 'abcd'
-        testsheet = BrailleTranslator(testtext).en_translation() # перевод текста в шрифт Брайля
-        for string in testsheet:    # построчный вывод текста
-            print(string)
         
-        while True:
         
-            for event in pg.event.get():
-                if event.type == QUIT:
-                    raise SystemExit # закрытие программы при нажатии на крестик в главном окне
-                    
-            mainscreen.blit(background,(0,0)) # отрисовка в окне заднего фона, начиная с координаты (0,0)
-            pg.display.flip() # обновление изображения каждую итерацию цикла
-            
-            
+a = BrailleTranslatorEN()
+print(a.Translation("\\"))
+
+# Ошибка при вводе любой цифры; Пофикшено, но по дебильному, ибо брейк - зло!!!!!!!!!!!!!!!!!!!!!!!!!!
