@@ -13,8 +13,8 @@ class Example(QWidget):
         self.textbox = QTextEdit(self)
         self.braillebox = QTextEdit(self)
         self.braillebox.setReadOnly(True)
-        self.transButton = QPushButton('Translate')
-        self.loadText = QPushButton('Load from File...')
+        self.transButton = QPushButton("Translate")
+        self.loadText = QPushButton("Load from File...")
         self.transButton.clicked.connect(self.buttonClicked)
         self.loadText.clicked.connect(self.showDialog)
         self.initUI()
@@ -39,17 +39,22 @@ class Example(QWidget):
 
     def buttonClicked(self):
         self.bt = BrailleTranslation(1)
-        #Вывод элементов в юникоде
-        self.braillebox.setText(''.join(self.bt.translation(self.textbox.toPlainText())))
+        #Вывод элементов в юникоде  
+        self.braillebox.setText("".join(self.bt.translation(str(self.textbox.toPlainText()) )))
         #Вывод элементов списка как строки в правом окне
 
     def showDialog(self):
-        fname = QFileDialog.getOpenFileNames(self, 'Open file')[0][0]
+        try:
+            fname = QFileDialog.getOpenFileNames(self, "Open file")[0][0]
+        except IndexError:
+            return None
+        #Конструкция try-except сделана для того, чтобы пофиксить баг с вылетом
+        #из-за нажатия крестика в меню выбора файла
         print(fname)
-        if fname:
-            f = open(fname)
-            data = f.read()
-            self.textbox.setText(data)
+        
+        with open(fname, encoding="utf-8") as FileData:
+            self.textbox.setText(FileData.read())
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
