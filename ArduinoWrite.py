@@ -8,22 +8,18 @@ from sys import platform # check os
 ###
 ### in future - with different os
 ###
-
-
 class AruinoWrite: 
-    def __init__(self,port="/dev/ttyUSB0"):
-        self.port = port
-        self.ser = serial.Serial(port)
-    
+    def __init__(self, port=False):
+        if not port:
+            self.CheckOS()
+        self.ser = serial.Serial(self.port)
     
     def CheckOS(self):   # чек платформы с помощью модуля sys и переменной platform
-        self.answer = ""
         if platform == "linux" or platform == "linux2":
-            self.answer = "/dev/ttyUSB0"
+            self.port = "/dev/ttyUSB0"
         elif platform == "win32" or platform == "win64":
-            self.answer = "COM3"
-        return self.answer
-        
+            self.port = "COM3"
+
         
     def writing(self,data): #передача информации на arduino по serial
         self.err = "Ok"

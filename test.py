@@ -55,6 +55,6 @@ class BrailleTranslatorEN:
         
         
 a = BrailleTranslatorEN()
-print(a.Translation("\\"))
+print(a.Translation("2"))
 
 # Ошибка при вводе любой цифры; Пофикшено, но по дебильному, ибо брейк - зло!!!!!!!!!!!!!!!!!!!!!!!!!!

@@ -8,6 +8,7 @@
 #PYTHONPATH.append("//home//ubuntu//workspace//project")
 
 from BrailleGui import BrailleGui
+from NewGui import Example
 #import BrailleTranslator
 def main():          #Иницилизация функции main для работы главного файла
     print("Hello, buys")
