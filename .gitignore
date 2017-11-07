@@ -1,6 +1,5 @@
 #Some unwanted files
-test.py
-
+.~c9*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
