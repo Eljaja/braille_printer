@@ -1,6 +1,9 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
+
+
+#dsadasdapsjofosjskpkf[pskdfpfkjs;djgodfjojfdojgodjfogjdfjgodfjoijgdofjodkgfo
 import sys
 from BrailleTranslator import BrailleTranslation
 from PyQt5.QtGui import *
