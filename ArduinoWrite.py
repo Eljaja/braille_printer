@@ -1,27 +1,28 @@
 #!/usr/bin/python3
 #coding: utf-8
 
-import serial #With arduino
+import serial  #With arduino
 
-from sys import platform # check os 
+from sys import platform  # check os
+
 
 ###
 ### in future - with different os
 ###
-class AruinoWrite: 
+class AruinoWrite:
     def __init__(self, port=False):
         if not port:
             self.CheckOS()
         self.ser = serial.Serial(self.port)
-    
-    def CheckOS(self):   # чек платформы с помощью модуля sys и переменной platform
+
+    def CheckOS(
+            self):  # чек платформы с помощью модуля sys и переменной platform
         if platform == "linux" or platform == "linux2":
             self.port = "/dev/ttyUSB0"
         elif platform == "win32" or platform == "win64":
             self.port = "COM3"
 
-        
-    def writing(self,data): #передача информации на arduino по serial
+    def writing(self, data):  #передача информации на arduino по serial
         self.err = "Ok"
         try:
             self.ser.write(data)

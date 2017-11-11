@@ -4,8 +4,8 @@
 #####
 ####Загляните в техническое задание/руководство к работе
 #####
-#from sys import path as PYTHONPATH
-#PYTHONPATH.append("//home//ubuntu//workspace//project")
+from sys import path as PYTHONPATH
+PYTHONPATH.append("//home//ubuntu//workspace//project")
 
 from BrailleGui import BrailleGui
 from NewGui import Example
@@ -18,14 +18,7 @@ def main():          #Иницилизация функции main для раб
     window = BrailleGui()
     window.gui()
     
-'''
-    try:
-        pass
-    except Exception as err:
-        if err != None:
-            print("###########################")
-            print(err)
-            print("###########################")
-'''
+    
+    
 if __name__ == "__main__":
     main()
