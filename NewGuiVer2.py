@@ -2,10 +2,11 @@
 # -*- coding: utf-8 -*-
 
 import sys
-from DrawList import DrawList
+#from DrawList import DrawList
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
+#from ArduinoWrite import AruduinoWrite
 app = QApplication(sys.argv)
 
 
@@ -15,9 +16,7 @@ class BrailleGui(QWidget):
         self.initUI()
 
     def initUI(self):
-        #grid = QGridLayout()
-        #self.setLayout(grid)
-        #
+
         self.textbox = QTextEdit(self)
         self.textbox.resize(310,430)
         self.textbox.move(10,10)
@@ -43,9 +42,8 @@ class BrailleGui(QWidget):
         LoadFromFileButton.clicked.connect(self.showDialog)
         PrintButton.clicked.connect(self.eventPrint)
 
-        self.setGeometry(300,100,640,500)
 
-        self.setGeometry(300,100,640,500)
+        self.setGeometry(300,100,640,480)
         self.setWindowTitle("Printer V0.1")
         self.setWindowIcon(QIcon('braille.png'))
         self.show()
@@ -67,12 +65,15 @@ class BrailleGui(QWidget):
             fname = QFileDialog.getOpenFileNames(self, "Open file")[0][0]
         except IndexError:
             pass
-        #Конструкция try-except сделана для того, чтобы пофиксить баг с вылетом
-        #из-за нажатия крестика в меню выбора файла
 
         with open(fname, encoding="utf-8") as FileData:
             self.textbox.setText(FileData.read())
 
+    def paintEvent(self):
+        qp = QPainter()
+        qp.begin(self)
+        self.drawBra(qp)
+        qp.end()
 
     def closeEvent(self, event):
         reply = QMessageBox.question(self, 'Message', "Are you sure to quit?",
