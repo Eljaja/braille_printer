@@ -43,9 +43,8 @@ class BrailleGui(QWidget):
         LoadFromFileButton.clicked.connect(self.showDialog)
         PrintButton.clicked.connect(self.eventPrint)
 
-        self.setGeometry(300,100,640,500)
 
-        self.setGeometry(300,100,640,500)
+        self.setGeometry(300,100,640,480)
         self.setWindowTitle("Printer V0.1")
         self.setWindowIcon(QIcon('braille.png'))
         self.show()
