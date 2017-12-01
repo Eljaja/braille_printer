@@ -1,6 +1,7 @@
 #Some unwanted files
 .~c9*
 test.py
+picture.png
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
