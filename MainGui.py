@@ -35,6 +35,7 @@ class BrailleGui(QWidget):
         grid = QGridLayout()
         grid.setSpacing(10)
         grid.addWidget(self.textbox,0,0)
+        grid.addWidget(self.pic,0,1)
 
         grid.addWidget(TranslateButton,1,0)
         grid.addWidget(LoadFromFileButton,1,1)
@@ -56,8 +57,10 @@ class BrailleGui(QWidget):
         Draw = DrawList()
         text = Draw.drawBraille(str(self.textbox.toPlainText()))
         Draw.saveFile()
-        ex = ShowPicture()
-        sys.exit(app.exec_())
+        self.pic.setPixmap(QPixmap("""./picture.png"""))
+        self.pic.resize(310,430)
+        self.pic.show()
+
 
     def showDialog(self):
         try:
