@@ -10,6 +10,7 @@ from PyQt5.QtCore import *
 app = QApplication(sys.argv)
 
 
+
 class BrailleGui(QWidget):
     def __init__(self):
         super().__init__()
@@ -18,30 +19,29 @@ class BrailleGui(QWidget):
     def initUI(self):
 
         self.textbox = QTextEdit(self)
-        self.textbox.resize(310,430)
-        self.textbox.move(10,10)
-
 
         self.pic = QLabel(self)
-        self.pic.resize(310,430)
-        self.pic.move(330,10)
 
         TranslateButton = QPushButton("Translate",self)
-        TranslateButton.move(10,445)
-        TranslateButton.resize(100,30)
 
         LoadFromFileButton = QPushButton("From File..",self)
-        LoadFromFileButton.move(120,445)
-        LoadFromFileButton.resize(100,30)
-        PrintButton = QPushButton("Print!",self)
 
-        PrintButton.move(230,445)
-        PrintButton.resize(100,30)
+        PrintButton = QPushButton("Print!",self)
 
         TranslateButton.clicked.connect(self.eventTranslate)
         LoadFromFileButton.clicked.connect(self.showDialog)
         PrintButton.clicked.connect(self.eventPrint)
 
+        grid = QGridLayout()
+        grid.setSpacing(10)
+        grid.addWidget(self.textbox,0,0)
+
+        grid.addWidget(TranslateButton,1,0)
+        grid.addWidget(LoadFromFileButton,1,1)
+        grid.addWidget(PrintButton,1,2)
+
+
+        self.setLayout(grid)
 
         self.setGeometry(300,100,640,480)
         self.setWindowTitle("Printer V0.1")
@@ -56,9 +56,8 @@ class BrailleGui(QWidget):
         Draw = DrawList()
         text = Draw.drawBraille(str(self.textbox.toPlainText()))
         Draw.saveFile()
-        self.pic.setPixmap(QPixmap("""./picture.png"""))
-        self.pic.resize(310,430)
-        self.pic.show()
+        ex = ShowPicture()
+        sys.exit(app.exec_())
 
     def showDialog(self):
         try:
@@ -77,6 +76,9 @@ class BrailleGui(QWidget):
             event.accept()
         else:
             event.ignore()
+
+
+
 
 if __name__ == "__main__":
 
