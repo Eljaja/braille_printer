@@ -9,32 +9,33 @@ class DrawList:
         self.translator = BrailleTranslator()
 
 
-    def show(self):
-        self.img.show()
+    def drawCircle(self,x,y,rad, point):
+        if point:
+            self.draw.ellipse((x-rad,y-rad,x+rad,y+rad),fill="black",outline="black")
+        else:
+            pass
 
     def drawBraille(self,text):
         brailleList = self.translator.translation(text)
-        x=152
-        y=152
-        commonSize=23
+        x=159
+        y=159
         newLine = 0
         for char in brailleList:
+            if char == "\n":
+                continue
+            self.drawCircle(x, y, 7, char[0]); self.drawCircle(x+28 ,y, 7, char[1])
+            self.drawCircle(x, y+28, 7, char[2]); self.drawCircle(x+28, y+28, 7, char[3])
+            self.drawCircle(x, y+28+28, 7, char[4]); self.drawCircle(x+28, y+28+28, 7, char[5])
+            x+=70
             newLine+=1
-            if char[0]==1: self.draw.ellipse((x,y,x+commonSize,y+commonSize),fill="black", outline="black")
-            if char[1]==1: self.draw.ellipse((x+commonSize+1,y, x+commonSize+1+commonSize,y+commonSize),fill="black", outline="black")
-            y+=commonSize+1
-            if char[2]==1: self.draw.ellipse((x,y,x+commonSize,y+commonSize),fill="black", outline="black")
-            if char[3]==1: self.draw.ellipse((x+commonSize+1,y, x+commonSize+1+commonSize,y+commonSize),fill="black", outline="black")
-            y+=commonSize+1
-            if char[4]==1: self.draw.ellipse((x,y,x+commonSize,y+commonSize),fill="black", outline="black")
-            if char[5]==1: self.draw.ellipse((x+commonSize+1,y, x+commonSize+1+commonSize,y+commonSize),fill="black", outline="black")
-            x+=3*commonSize
-            y-=commonSize*2 + 2
             if newLine == 32:
                 newLine = 0
-                y+=commonSize*5
-                x=152
+                x=159
+                y+=110
 
     def saveFile(self):
         self.img = self.img.resize((310,430),Image.ANTIALIAS)
         self.img.save("""./picture.png""","PNG")
+# a = DrawList()
+# a.drawBraille("hsafjslafhsila nhyniosuyhfa iousy ifuyas iufyiasugfuasgfukagsifgasufguasgfuagsfuygasufguasygfuasygfuaygi")
+# a.show()

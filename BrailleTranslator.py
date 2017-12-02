@@ -13,7 +13,10 @@ class BrailleTranslator:
         self.isUpper = False
 
     def translation(self, string):
+        print("#"*20)
+        stringtest=""
         for symbol in string:
+            stringtest+="|" + symbol + "| "
             if symbol.isalpha():
                 if not self.isAlpha:
                     self.isAlpha = True
@@ -45,5 +48,6 @@ class BrailleTranslator:
                 self.isAlpha = True
                 self.isUpper = False
                 self.brailleList.append(alph[symbol])
-
+        print(stringtest)
+        print("#"*20)
         return self.brailleList

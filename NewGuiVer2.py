@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import sys
-#from DrawList import DrawList
+from DrawList import DrawList
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
@@ -69,11 +69,6 @@ class BrailleGui(QWidget):
         with open(fname, encoding="utf-8") as FileData:
             self.textbox.setText(FileData.read())
 
-    def paintEvent(self):
-        qp = QPainter()
-        qp.begin(self)
-        self.drawBra(qp)
-        qp.end()
 
     def closeEvent(self, event):
         reply = QMessageBox.question(self, 'Message', "Are you sure to quit?",
