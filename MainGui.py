@@ -32,17 +32,17 @@ class BrailleGui(QWidget):
         LoadFromFileButton.clicked.connect(self.showDialog)
         PrintButton.clicked.connect(self.eventPrint)
 
-        grid = QGridLayout()
-        grid.setSpacing(10)
-        grid.addWidget(self.textbox,0,0)
-        grid.addWidget(self.pic,0,1)
+        self.grid = QGridLayout()
+        self.grid.setSpacing(10)
+        self.grid.addWidget(self.textbox,0,0)
+        self.grid.addWidget(self.pic,0,1)
 
-        grid.addWidget(TranslateButton,1,0)
-        grid.addWidget(LoadFromFileButton,1,1)
-        grid.addWidget(PrintButton,1,2)
+        self.grid.addWidget(TranslateButton,1,0)
+        self.grid.addWidget(LoadFromFileButton,1,1)
+        self.grid.addWidget(PrintButton,1,2)
 
 
-        self.setLayout(grid)
+        self.setLayout(self.grid)
 
         self.setGeometry(300,100,640,480)
         self.setWindowTitle("Printer V0.1")
@@ -58,8 +58,16 @@ class BrailleGui(QWidget):
         text = Draw.drawBraille(str(self.textbox.toPlainText()))
         Draw.saveFile()
         self.pic.setPixmap(QPixmap("""./picture.png"""))
-        self.pic.resize(310,430)
-        self.pic.show()
+        # self.pic.resize(310,430)
+        # self.pic.show()
+
+
+    def resizeEvent(self, event):
+        self.w = self.textbox.width()
+        self.h = self.textbox.height()
+
+        print("w",self.textbox.width())
+        print("h",self.textbox.height())
 
 
     def showDialog(self):
@@ -79,8 +87,6 @@ class BrailleGui(QWidget):
             event.accept()
         else:
             event.ignore()
-
-
 
 
 if __name__ == "__main__":
