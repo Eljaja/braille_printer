@@ -17,10 +17,11 @@ class BrailleGui(QWidget):
         self.initUI()
 
     def initUI(self):
-
         self.textbox = QTextEdit(self)
-
         self.pic = QLabel(self)
+        self.pic.setPixmap(QPixmap("""./startpic.png"""))
+        self.pic.setScaledContents(True)
+
 
         TranslateButton = QPushButton("Translate",self)
 
@@ -33,14 +34,14 @@ class BrailleGui(QWidget):
         PrintButton.clicked.connect(self.eventPrint)
 
         self.grid = QGridLayout()
+
         self.grid.setSpacing(10)
         self.grid.addWidget(self.textbox,0,0)
         self.grid.addWidget(self.pic,0,1)
 
-        self.grid.addWidget(TranslateButton,1,0)
-        self.grid.addWidget(LoadFromFileButton,1,1)
-        self.grid.addWidget(PrintButton,1,2)
-
+        self.grid.addWidget(TranslateButton,2,0)
+        self.grid.addWidget(LoadFromFileButton,2,1)
+        self.grid.addWidget(PrintButton,2,2)
 
         self.setLayout(self.grid)
 
@@ -48,26 +49,25 @@ class BrailleGui(QWidget):
         self.setWindowTitle("Printer V0.1")
         self.setWindowIcon(QIcon('braille.png'))
         self.show()
-
     def eventPrint(self): #Я ещё тут подумаю
         pass
 
     def eventTranslate(self):
-
         Draw = DrawList()
         text = Draw.drawBraille(str(self.textbox.toPlainText()))
         Draw.saveFile()
         self.pic.setPixmap(QPixmap("""./picture.png"""))
-        # self.pic.resize(310,430)
-        # self.pic.show()
+        self.newpic = Picture()
+        #self.pic.resize(310,430)
+        self.newpic.show()
 
 
     def resizeEvent(self, event):
         self.w = self.textbox.width()
         self.h = self.textbox.height()
-
-        print("w",self.textbox.width())
-        print("h",self.textbox.height())
+        self.pic.resize(self.w,self.h)
+        print("w",self.w)
+        print("h",self.h)
 
 
     def showDialog(self):
@@ -87,6 +87,23 @@ class BrailleGui(QWidget):
             event.accept()
         else:
             event.ignore()
+
+class Picture(QWidget):
+        def __init__(self):
+            super().__init__()
+            self.initUI()
+
+        def initUI(self):
+            self.pic = QLabel(self)
+            self.pic.setPixmap(QPixmap("""./picture.png"""))
+            self.pic.setScaledContents(True)
+            self.grid = QGridLayout()
+            self.grid.addWidget(self.pic)
+            self.setLayout(self.grid)
+            self.setWindowTitle("Picture")
+            self.setWindowIcon(QIcon('braille.png'))
+            self.setGeometry(300,100,310,430)
+            self.pic.setScaledContents(True)
 
 
 if __name__ == "__main__":
