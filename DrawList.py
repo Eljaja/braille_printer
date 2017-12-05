@@ -2,7 +2,7 @@ from PIL import Image, ImageDraw
 from constant import alph
 from BrailleTranslator import BrailleTranslator
 import time
-from multiprocessing import Process
+from multiprocessing.dummy import Pool as ThreadPool
 
 class DrawList:
     def __init__(self,size_x=2480,size_y=3508):
@@ -10,53 +10,62 @@ class DrawList:
         self.height = size_y
         self.translator = BrailleTranslator()
 
-    def drawCircle(self,x,y,rad, point):
-        if point:
-            self.draw.ellipse((x-rad,y-rad,x+rad,y+rad),fill="black",outline="black")
-        else:
-            pass
-
-
-    def threadingSave(self,sheet):
-        self.img.save("""./text/picture{}.png""".format(sheet),"PNG")
-        self.img = Image.new("1",(self.width, self.height),1)
-        self.draw = ImageDraw.Draw(self.img)
-
-
-
 
     def drawBraille(self,text):
+
+
+
+
         brailleList = self.translator.translation(text)
-        self.img = Image.new("1",(self.width, self.height),1)
-        self.draw = ImageDraw.Draw(self.img)
-        x=137
-        y=159
-        newLine = 0
-        Lines = 0
+        lists = []
         sheet = 1
-        for char in brailleList:
-            newLine+=1
-            self.drawCircle(x, y, 7, char[0]); self.drawCircle(x+28 ,y, 7, char[1])
-            self.drawCircle(x, y+28, 7, char[2]); self.drawCircle(x+28, y+28, 7, char[3])
-            self.drawCircle(x, y+28+28, 7, char[4]); self.drawCircle(x+28, y+28+28, 7, char[5])
-            x+=70
+        oneList = [sheet]
 
-            if newLine == 32:
-                newLine = 0
-                x=137
-                y+=110
-                Lines +=1
+        for i in range(len(brailleList)-1):
+            oneList.append(brailleList[i])
+            if (i+1) % (32*29) == 0:
+                try:
+                    lists.append(oneList)
+                    sheet+=1
+                    oneList = [sheet]
+                except Exception as det:
+                    lists.append(oneList)
 
-            if Lines == 29:
-                Lines = 0
-                t1 = Process(target=self.threadingSave(sheet))
-                t1.daemon = True
-                t1.start()
-                x=137
-                y=159
-                sheet+=1
 
-        self.img.save("""./text/picture{}.png""".format(sheet),"PNG")
+        def Draw(oneList):
+            def drawCircle(x,y,rad, point):
+                if point:
+                    draw.ellipse((x-rad,y-rad,x+rad,y+rad),fill=0,outline=0)
+
+            number = oneList[0]
+            del oneList[0]
+            img = Image.new("1",(self.width, self.height),1)
+            draw = ImageDraw.Draw(img)
+            x=137
+            y=159
+            newLine = 0
+            Lines = 0
+            for char in oneList:
+                if char == None: continue
+                newLine+=1
+                drawCircle(x, y, 7, char[0]); drawCircle(x+28 ,y, 7, char[1])
+                drawCircle(x, y+28, 7, char[2]); drawCircle(x+28, y+28, 7, char[3])
+                drawCircle(x, y+28+28, 7, char[4]); drawCircle(x+28, y+28+28, 7, char[5])
+                x+=70
+                if newLine == 32:
+                    newLine = 0
+                    x=137
+                    y+=110
+                    Lines +=1
+            img.save("""./text/picture{}.png""".format(number),"PNG")
+            return "Ok " + str(number)
+
+        pool = ThreadPool(16)
+        results = pool.map(Draw, lists)
+        pool.close()
+        pool.join()
+
+
 
 
 
