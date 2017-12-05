@@ -18,10 +18,9 @@ class BrailleGui(QWidget):
 
     def initUI(self):
         self.textbox = QTextEdit(self)
-        self.pic = QLabel(self)
-        self.pic.setPixmap(QPixmap("""./startpic.png"""))
-        self.pic.setScaledContents(True)
-
+        #self.pic = QLabel(self)
+        #self.pic.setPixmap(QPixmap("""./startpic.png"""))
+        #self.pic.setScaledContents(True)
 
         TranslateButton = QPushButton("Translate",self)
 
@@ -37,11 +36,11 @@ class BrailleGui(QWidget):
 
         self.grid.setSpacing(10)
         self.grid.addWidget(self.textbox,0,0)
-        self.grid.addWidget(self.pic,0,1)
+        #self.grid.addWidget(self.pic,0,1)
 
-        self.grid.addWidget(TranslateButton,2,0)
-        self.grid.addWidget(LoadFromFileButton,2,1)
-        self.grid.addWidget(PrintButton,2,2)
+        self.grid.addWidget(TranslateButton,1,0)
+        self.grid.addWidget(LoadFromFileButton,1,1)
+        self.grid.addWidget(PrintButton,1,2)
 
         self.setLayout(self.grid)
 
@@ -49,6 +48,8 @@ class BrailleGui(QWidget):
         self.setWindowTitle("Printer V0.1")
         self.setWindowIcon(QIcon('braille.png'))
         self.show()
+
+
     def eventPrint(self): #Я ещё тут подумаю
         pass
 
@@ -56,18 +57,10 @@ class BrailleGui(QWidget):
         Draw = DrawList()
         text = Draw.drawBraille(str(self.textbox.toPlainText()))
         Draw.saveFile()
-        self.pic.setPixmap(QPixmap("""./picture.png"""))
+        #self.pic.setPixmap(QPixmap("""./picture.png"""))
         self.newpic = Picture()
         #self.pic.resize(310,430)
         self.newpic.show()
-
-
-    def resizeEvent(self, event):
-        self.w = self.textbox.width()
-        self.h = self.textbox.height()
-        self.pic.resize(self.w,self.h)
-        print("w",self.w)
-        print("h",self.h)
 
 
     def showDialog(self):
@@ -80,13 +73,13 @@ class BrailleGui(QWidget):
             self.textbox.setText(FileData.read())
 
 
-    def closeEvent(self, event):
-        reply = QMessageBox.question(self, 'Message', "Are you sure to quit?",
-                                QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
-        if reply == QMessageBox.Yes:
-            event.accept()
-        else:
-            event.ignore()
+    # def closeEvent(self, event):
+    #     reply = QMessageBox.question(self, 'Message', "Are you sure to quit?",
+    #                             QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+    #     if reply == QMessageBox.Yes:
+    #         event.accept()
+    #     else:
+    #         event.ignore()
 
 class Picture(QWidget):
         def __init__(self):
